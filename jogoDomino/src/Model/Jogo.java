@@ -1,5 +1,8 @@
 package Model;
 
+
+import java.util.Date;
+
 public class Jogo {
     private Jogador arrayJogadores[];
     private int maxJogadores;
@@ -18,23 +21,36 @@ public class Jogo {
      * @return Retorna true caso o login tenha sido efetuado e false caso
      * contrário.
      */
-    public boolean fazLogin(String email, String senha){
-        boolean retorno = false;
+    public String fazLogin(String email, String senha){
+        String retorno="";
         int i=0;
-
-        while((i<this.maxJogadores) && (retorno == false)){
-            if(this.arrayJogadores[i].getEmail().equals(email) && /*FALTA A PARTIR DAQUI*/){
-
-                /*
-                * && ... (VERIFICAR SE A SENHA NA POSIÇÃO i É IGUAL A SENHA QUE VEIO PELO
-                * PARÂMETRO, QUE TAMBÉM DEVE SER CRIPTOGRAFADA PARA FAZER A COMPARAÇÃO) E A PARTIR
-                * DAI FAZER A CONTAGEM DE TENTATIVAS DO USUÁRIO EM QUESTÃO.
-                * */
+        int tentativas;
+        Date data = new Date();
 
 
 
-                retorno = true;
+        while(i<this.maxJogadores){
+            retorno = "";
+            tentativas = arrayJogadores[i].getTentativas();
+
+            // Primeiro precisamos verificar se o email informado existe e apenas depois verificar a senha correta.
+            if(this.arrayJogadores[i].getEmail().equals(email) && tentativas>0){
+                if(this.arrayJogadores[i].getSenha().equals(Criptografia.criptografar(senha))){
+                    retorno = "Login realizado com sucesso!";
+                }else{
+                    arrayJogadores[i].setTentativas(tentativas--);
+                }
+            }else{
+                if(tentativas <=0 /*& (arrayJogadores[i].getDataBloqueio() == null || arrayJogadores[i].getDataBloqueio() >= data.getDate())*/){
+                    retorno="";
+                    retorno = "Esse usuario está bloqueado devido a tentativas esgotadas";
+                    i=this.maxJogadores;
+                }else{
+                    retorno="";
+                    retorno = "Usuario não encontrado";
+                }
             }
+            i++;
         }
         return retorno;
     }
