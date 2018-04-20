@@ -1,21 +1,12 @@
 package Model;
 
-
-public abstract class Usuario {
+public class Humano extends Jogador {
     private String email;
     private String senha;
 
-    public Usuario(String email, String senha){
+    public Humano(String email, String senha) {
         this.email = email;
         setSenha(senha);
-    }
-
-    /**
-     * Verifica se o email é valido. É valido quando contém @ e o termino com (.com ou .com.br).
-     * @return Verdadeiro se contém e Falso se não contém.
-     */
-    public boolean validaEmail(){
-        return this.email.contains("@")&&(this.email.contains(".com")||this.email.contains(".com.br"));
     }
 
     public String getEmail() {
@@ -28,6 +19,7 @@ public abstract class Usuario {
      */
     public void setEmail(String email) {
         this.email = email;
+        //VALIDAR ANTES !
     }
 
     public String getSenha() {
@@ -41,7 +33,4 @@ public abstract class Usuario {
     public void setSenha(String senha) {
         this.senha = Criptografia.criptografar(senha);
     }
-
-public class Usuario {
-
 }

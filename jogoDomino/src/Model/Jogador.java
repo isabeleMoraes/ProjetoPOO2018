@@ -1,12 +1,14 @@
 package Model;
 
+public abstract class Jogador{
+    protected double score;
 
-public class Jogador extends Usuario{
-    public Jogador(String email, String senha){
-        super(email, senha);
+    public double getScore() {
+        return score;
     }
 
-public class Jogador {
-
+    public void setScore(double score) {
+        this.score = score;
+    }
 
 }
